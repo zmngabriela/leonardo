@@ -38,7 +38,14 @@ const Home = () => {
                 onMouseEnter={() => handleHoverEnter('paka vintage glam')} 
                 onMouseLeave={handleMouseLeave}
             >
-                <video autoPlay muted loop className="d-block vh-100 w-100 object-fit-cover">
+                <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    controls={false} 
+                    className="d-block pe-none vh-100 w-100 object-fit-cover"
+                >
                     <source src="https://res.cloudinary.com/ddp4eyyfs/video/upload/v1741728113/Screen_Recording_2025-03-11_at_18.24.55_uembky.mov" type="video/mp4" />
                 </video>
             </Link>
@@ -48,7 +55,14 @@ const Home = () => {
                 onMouseEnter={() => handleHoverEnter('nooda')} 
                 onMouseLeave={handleMouseLeave}
             >
-                <video autoPlay muted loop className="d-block col-12 col-md-6 object-fit-cover p-0">
+                <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    controls={false} 
+                    className="d-block pe-none col-12 col-md-6 object-fit-cover p-0"
+                >
                     <source src="https://res.cloudinary.com/ddp4eyyfs/video/upload/v1741728098/Screen_Recording_2025-03-11_at_18.30.50_o4liry.mov" type="video/mp4" />
                 </video>
                 <img className='col-12 col-md-6 object-fit-cover p-0' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728087/Screenshot_2025-03-11_at_18.32.27_ggblwm.png" alt="" />
@@ -67,7 +81,13 @@ const Home = () => {
                 onMouseEnter={() => handleHoverEnter('brava sushi')} 
                 onMouseLeave={handleMouseLeave}
             >
-                <video autoPlay muted loop className="d-block vh-100 w-100 object-fit-cover">
+                <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    controls={false} 
+                    className="d-block pe-none vh-100 w-100 object-fit-cover">
                     <source src="https://res.cloudinary.com/ddp4eyyfs/video/upload/v1741730288/brava_r2rvkg.mp4" type="video/mp4" />
                 </video>
             </Link>
