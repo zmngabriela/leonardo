@@ -2,12 +2,15 @@ function Footer() {
     const year = new Date().getFullYear()
     
     return (
-        <footer className="fixed-bottom flex row w-80 m-auto py-1 text-light">
-            <div className="col-2 d-flex flex-column">
-                <p className="font-bold m-0">Content producer, videomaker and photographer.</p>
+        <footer 
+            className="fixed-bottom gap-5 d-flex pb-1 px-3 text-light"
+            style={{ mixBlendMode: 'difference' }}
+        >
+            <div className="w-50 w-md-25 d-flex flex-column">
+                <p className="m-0">Content producer, videomaker and photographer.</p>
                 <p className="m-0">Based in Barcelona</p>
             </div>
-            <p className="col-1">&copy; {year}</p>
+            <p>&copy; {year}</p>
         </footer>
     )
 }
