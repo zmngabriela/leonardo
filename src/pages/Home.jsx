@@ -27,7 +27,8 @@ const Home = () => {
                 style={{
                     left: position.x + 10 + "px",
                     top: position.y + 10 + "px",
-                    transition: "transform 0.1s ease-out"
+                    transition: "transform 0.1s ease-out",
+                    mixBlendMode: 'difference'
                 }}
             >
                 <img src={cursor} style={{ width: '25px' }} className='m-3' alt="" />
