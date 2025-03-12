@@ -51,7 +51,7 @@ const Home = () => {
             </Link>
             <Link 
                 to='/nooda'
-                className='row' 
+                className='row p-0 m-0' 
                 onMouseEnter={() => handleHoverEnter('nooda')} 
                 onMouseLeave={handleMouseLeave}
             >
@@ -65,7 +65,7 @@ const Home = () => {
                 >
                     <source src="https://res.cloudinary.com/ddp4eyyfs/video/upload/v1741728098/Screen_Recording_2025-03-11_at_18.30.50_o4liry.mov" type="video/mp4" />
                 </video>
-                <img className='col-12 col-md-6 object-fit-cover p-0' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728087/Screenshot_2025-03-11_at_18.32.27_ggblwm.png" alt="" />
+                <img className='col-12 col-md-6 vh-100 object-fit-cover p-0' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728087/Screenshot_2025-03-11_at_18.32.27_ggblwm.png" alt="" />
             </Link>
             <Link 
                 to='/nooda'
@@ -73,8 +73,8 @@ const Home = () => {
                 onMouseEnter={() => handleHoverEnter('nooda')} 
                 onMouseLeave={handleMouseLeave}
             >
-                <img src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728091/Screenshot_2025-03-11_at_18.31.40_legjo6.png" alt="" className='col-12 col-md-6 p-0 object-fit-cover' />
-                <img src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728088/Screenshot_2025-03-11_at_18.32.02_qylapa.png" alt="" className='col-12 col-md-6 p-0 object-fit-cover' />
+                <img className='col-12 col-md-6 vh-100 p-0 object-fit-cover' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728091/Screenshot_2025-03-11_at_18.31.40_legjo6.png" alt=""/>
+                <img className='col-12 col-md-6 vh-100 p-0 object-fit-cover' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728088/Screenshot_2025-03-11_at_18.32.02_qylapa.png" alt=""/>
             </Link>
             <Link 
                 to='/brava'
