@@ -1,12 +1,27 @@
+import { Link, useLocation } from "react-router-dom"
+
 function Header() {
+    const location = useLocation()
+
     return (
-        <header className="fixed-top flex row w-80 m-auto py-1 text-light">
-            <p className="col-2">Leonardo Cadore</p>
-            <ul className="col-2 offset-5 inline-flex list-unstyled">
-                <li>About</li>
-                <li>Contact</li>
+        <header 
+            className="fixed-top flex row w-80 m-auto py-1 px-3 text-light"
+            style={{ mixBlendMode: 'difference' }}
+        >
+            <p className="col-5 col-md-2 px-0">Leonardo Cadore</p>
+            <ul className="col-5 col-md-2 offset-2 offset-md-5 inline-flex list-unstyled text-end text-md-start">
+                <li>
+                    <Link to={location.pathname === '/about' ? '/' : '/about'} className="text-light">
+                        {location.pathname === '/about' ? 'Home' : 'About'}
+                    </Link>
+                </li>
+                <li>
+                    <Link to={location.pathname === '/contact' ? '/' : '/contact'} className="text-light">
+                        {location.pathname === '/contact' ? 'Home' : 'Contact'}
+                    </Link>
+                </li>
             </ul>
-            <p className="col-1 offset-2 text-end">Email</p>
+            <a href="mailto:leonardo.cadore@gmail.com" className="d-none d-md-block col-1 offset-2 text-end text-light p-0">Email</a>
         </header>
     )
 }
