@@ -3,7 +3,7 @@ function Footer() {
     
     return (
         <footer 
-            className="fixed-bottom gap-5 d-flex pb-1 px-3 text-light"
+            className="fixed-bottom gap-5 d-flex pb-4 px-3 text-light"
             style={{ mixBlendMode: 'difference' }}
         >
             <div className="w-50 w-md-25 d-flex flex-column">

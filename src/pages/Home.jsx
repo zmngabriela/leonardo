@@ -62,7 +62,7 @@ const Home = () => {
                     loop 
                     playsInline 
                     controls={false} 
-                    className="d-block pe-none col-12 col-md-6 object-fit-cover p-0"
+                    className="d-block pe-none col-12 col-md-6 vh-100 object-fit-cover p-0"
                 >
                     <source src="https://res.cloudinary.com/ddp4eyyfs/video/upload/v1741728098/Screen_Recording_2025-03-11_at_18.30.50_o4liry.mov" type="video/mp4" />
                 </video>

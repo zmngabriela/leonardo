@@ -8,7 +8,7 @@ function Header() {
             className="fixed-top flex row w-80 m-auto py-1 px-3 text-light"
             style={{ mixBlendMode: 'difference' }}
         >
-            <p className="col-5 col-md-2 px-0">Leonardo Cadore</p>
+            <p className="col-5 col-md-2 px-0 fs-6">Leonardo Cadore</p>
             <ul className="col-5 col-md-2 offset-2 offset-md-5 inline-flex list-unstyled text-end text-md-start">
                 <li>
                     <Link to={location.pathname === '/about' ? '/' : '/about'} className="text-light">
