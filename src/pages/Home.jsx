@@ -35,7 +35,7 @@ const Home = () => {
                 {content}
             </div>
             <Link 
-                to='/paka'
+                to='/client/1'
                 onMouseEnter={() => handleHoverEnter('paka vintage glam')} 
                 onMouseLeave={handleMouseLeave}
             >
@@ -51,7 +51,7 @@ const Home = () => {
                 </video>
             </Link>
             <Link 
-                to='/nooda'
+                to='/client/2'
                 className='row p-0 m-0' 
                 onMouseEnter={() => handleHoverEnter('nooda')} 
                 onMouseLeave={handleMouseLeave}
@@ -69,7 +69,7 @@ const Home = () => {
                 <img className='col-12 col-md-6 vh-100 object-fit-cover p-0' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728087/Screenshot_2025-03-11_at_18.32.27_ggblwm.png" alt="" />
             </Link>
             <Link 
-                to='/nooda'
+                to='/client/2'
                 className='row p-0 m-0' 
                 onMouseEnter={() => handleHoverEnter('nooda')} 
                 onMouseLeave={handleMouseLeave}
@@ -78,7 +78,7 @@ const Home = () => {
                 <img className='col-12 col-md-6 vh-100 p-0 object-fit-cover' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728088/Screenshot_2025-03-11_at_18.32.02_qylapa.png" alt=""/>
             </Link>
             <Link 
-                to='/brava'
+                to='/client/3'
                 onMouseEnter={() => handleHoverEnter('brava sushi')} 
                 onMouseLeave={handleMouseLeave}
             >
