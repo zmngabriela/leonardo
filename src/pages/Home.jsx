@@ -20,8 +20,7 @@ const Home = () => {
     }
 
     return (
-        <section className='position-relative' onMouseMove={handleMouseMove}
-        >
+        <section className='position-relative' onMouseMove={handleMouseMove}>
             <div
                 className="position-absolute text-light pe-none bg-transparent"
                 style={{
@@ -38,6 +37,7 @@ const Home = () => {
                 to='/client/1'
                 onMouseEnter={() => handleHoverEnter('paka vintage glam')} 
                 onMouseLeave={handleMouseLeave}
+                style={{ cursor: 'none'}}
             >
                 <video 
                     autoPlay 
@@ -55,6 +55,7 @@ const Home = () => {
                 className='row p-0 m-0' 
                 onMouseEnter={() => handleHoverEnter('nooda')} 
                 onMouseLeave={handleMouseLeave}
+                style={{ cursor: 'none'}}
             >
                 <video 
                     autoPlay 
@@ -73,6 +74,7 @@ const Home = () => {
                 className='row p-0 m-0' 
                 onMouseEnter={() => handleHoverEnter('nooda')} 
                 onMouseLeave={handleMouseLeave}
+                style={{ cursor: 'none'}}
             >
                 <img className='col-12 col-md-6 vh-100 p-0 object-fit-cover' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728091/Screenshot_2025-03-11_at_18.31.40_legjo6.png" alt=""/>
                 <img className='col-12 col-md-6 vh-100 p-0 object-fit-cover' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728088/Screenshot_2025-03-11_at_18.32.02_qylapa.png" alt=""/>
@@ -81,6 +83,7 @@ const Home = () => {
                 to='/client/3'
                 onMouseEnter={() => handleHoverEnter('brava sushi')} 
                 onMouseLeave={handleMouseLeave}
+                style={{ cursor: 'none'}}
             >
                 <video 
                     autoPlay 
