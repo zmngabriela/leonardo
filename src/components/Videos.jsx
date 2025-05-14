@@ -10,7 +10,6 @@ const Videos = ({ videos, className }) => {
                             loop 
                             playsInline 
                             controls={false}
-                            className="w-100 h-100 object-fit-cover"
                             loading="lazy"
                             preload="none"
                             poster={`${video}?raw=1`}

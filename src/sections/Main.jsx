@@ -4,7 +4,6 @@ import Projects from "../components/Work";
 import About from "../components/About";
 import Preloader from "../components/Preloader";
 import Videos from "../components/Videos";
-import Photos from "../components/Photos";
 
 const Main = () => {
     const [contentPreloader, setContentPreloader] = useState(false);
@@ -114,12 +113,6 @@ const Main = () => {
                         'https://dl.dropbox.com/scl/fi/9r8nmat423nj302ravmvn/christy-meshel-final-video.mov?rlkey=p1yjfcouaahdmicnxlocsxlrb&raw=1',
                         'https://dl.dropbox.com/scl/fi/gmu6nb5dmmpkhmg0pul7o/auto-gentileza-final-version.mp4?rlkey=3y669x6wukfgmaow7rwg0gcc6&raw=1',
                     ]}/>
-
-                    <div className="hero-closing stacked-section">
-                        <Hero backgroundColor={activeProject}>
-                            <Projects videoRefs={videoRefs} onHover={handleProjectHover} />
-                        </Hero>
-                    </div>
 
                     {/* Scroll container for reveal animations */}
                     <div className="scroll-container" />

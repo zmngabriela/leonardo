@@ -8,9 +8,6 @@ const Work = ({videoRefs, onHover}) => {
         'https://dl.dropbox.com/scl/fi/4g1b59myca5nlzqkcyupc/NOODA-V5-SIN-TEXTOS-VERSAO-FINAL.mp4?rlkey=6w24tjdmojqxusgl73uvwkmhh&raw=1',
     ];
 
-    // Store last scroll position to detect direction
-    let lastScrollPosition = window.scrollY;
-
     // effect to rotate the video
     const handleMouseMove = (event, element) => {
         const rect = element.getBoundingClientRect();
@@ -51,37 +48,15 @@ const Work = ({videoRefs, onHover}) => {
     const handleScroll = (e) => {
         const container = e.target;
         const scrollTop = container.scrollTop;
-        const maxScroll = container.scrollHeight - container.clientHeight;
         
         // Controla o shrink do título
-        const shouldShrink = scrollTop > 100 && scrollTop < 5500;
+        const shouldShrink = scrollTop > 100 && scrollTop < 5000;
         document.querySelector('.container-title')?.classList.toggle('shrink', shouldShrink);
 
-        // Get document scroll position and dimensions
-        const documentHeight = document.documentElement.scrollHeight;
-        const windowHeight = window.innerHeight;
-        const scrollPosition = window.scrollY;
-
-        // Detect scroll direction
-        const isScrollingUp = scrollPosition < lastScrollPosition;
-        lastScrollPosition = scrollPosition;
-
-        // Check if we're in the last hero section
-        const isInLastHero = document.querySelector('.hero-closing')?.getBoundingClientRect().top === 0;
-
-        if (isInLastHero) {
-            // Only lock scroll when scrolling down and not at the bottom
-            if (!isScrollingUp && scrollPosition < documentHeight - windowHeight) {
-                document.querySelector('.hero-closing').style.overflow = 'hidden';
-            } else if (isScrollingUp && scrollPosition > documentHeight - windowHeight) {
-                document.querySelector('.hero-closing').style.overflow = '';
-            }
+        if (scrollTop < container.clientHeight) {
+            document.body.style.overflow = 'hidden';
         } else {
-            if (scrollTop < maxScroll) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
+            document.body.style.overflow = '';
         }
     };
 
