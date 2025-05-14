@@ -1,102 +1,131 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState } from "react";
 
-import cursor from '../assets/plus.png'
+import Projects from "../components/Projects";
+import About from "../components/About";
+import Preloader from "../components/Preloader";
+import Videos from "../components/Videos";
 
 const Home = () => {
-    const [position, setPosition] = useState({ x: 0, y: 0 })
-    const [content, setContent ] = useState('')
+    const [contentPreloader, setContentPreloader] = useState(false);
+    const [activeProject, setActiveProject] = useState(null);
+    const videoRefs = useRef([]);
 
-    const handleMouseMove = (e) => {
-        setPosition({ x: e.pageX, y: e.pageY })
-    }
+    const handleProjectHover = (projectIndex) => {
+        setActiveProject(projectIndex ? `var(--project-color-${projectIndex})` : null);
+    };
 
-    const handleHoverEnter = (content) => {
-        setContent(content)
-    }
+    {/* Preloader timer for content */}
+    useEffect(() => {
+        const contentTimer = setTimeout(() => {
+            setContentPreloader(true);
+        }, 3000);
+        return () => clearInterval(contentTimer);
+    }, [])
+    
+    {/* Observes video project refs to add style in-view */}
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.remove('in-view');
+                    }
+                })
+            },
+            {
+                threshold: Array.from({ length: 100 }, (_, i) => i / 100),
+            }
+        )
+        videoRefs.current.forEach(ref => {
+            if (ref) observer.observe(ref);
+        })
+        return () => {
+            videoRefs.current.forEach(ref => {
+                if (ref) observer.unobserve(ref);
+            })
+        }
+    }, [contentPreloader])
 
-    const handleMouseLeave = () => {
-        setContent('')
-    }
+    {/* Scroll progress */}
+    useEffect(() => {
+        const onScroll = () => {
+            const html = document.documentElement;
+            const scrollVh = html.scrollTop / html.clientHeight;
+            html.style.setProperty('--scroll', scrollVh);
+        };
+        
+        window.addEventListener('scroll', onScroll);
+        onScroll();
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     return (
-        <section className='position-relative' onMouseMove={handleMouseMove}>
-            <div
-                className="position-absolute text-light pe-none bg-transparent"
-                style={{
-                    left: position.x + 10 + "px",
-                    top: position.y + 10 + "px",
-                    transition: "transform 0.1s ease-out",
-                    mixBlendMode: 'difference'
-                }}
-            >
-                <img src={cursor} style={{ width: '25px' }} className='m-3' alt="" />
-                {content}
-            </div>
-            <Link 
-                to='/client/1'
-                onMouseEnter={() => handleHoverEnter('paka vintage glam')} 
-                onMouseLeave={handleMouseLeave}
-                style={{ cursor: 'none'}}
-            >
-                <video 
-                    autoPlay 
-                    muted 
-                    loop 
-                    playsInline 
-                    controls={false} 
-                    className="d-block pe-none vh-100 w-100 object-fit-cover"
+        <div>
+            <Preloader />
+            <div>
+                <section 
+                    className="hero w-100 d-flex justify-content-center align-items-center"
+                    style={{ 
+                        backgroundColor: isHovering ? 'var(--background-color)' : 'black',
+                        transition: 'background-color 0.3s ease'
+                    }}
                 >
-                    <source src="https://res.cloudinary.com/ddp4eyyfs/video/upload/v1741728113/Screen_Recording_2025-03-11_at_18.24.55_uembky.mov" type="video/mp4" />
-                </video>
-            </Link>
-            <Link 
-                to='/client/2'
-                className='row p-0 m-0' 
-                onMouseEnter={() => handleHoverEnter('nooda')} 
-                onMouseLeave={handleMouseLeave}
-                style={{ cursor: 'none'}}
-            >
-                <video 
-                    autoPlay 
-                    muted 
-                    loop 
-                    playsInline 
-                    controls={false} 
-                    className="d-block pe-none col-12 col-md-6 vh-100 object-fit-cover p-0"
-                >
-                    <source src="https://res.cloudinary.com/ddp4eyyfs/video/upload/v1741728098/Screen_Recording_2025-03-11_at_18.30.50_o4liry.mov" type="video/mp4" />
-                </video>
-                <img className='col-12 col-md-6 vh-100 object-fit-cover p-0' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728087/Screenshot_2025-03-11_at_18.32.27_ggblwm.png" alt="" />
-            </Link>
-            <Link 
-                to='/client/2'
-                className='row p-0 m-0' 
-                onMouseEnter={() => handleHoverEnter('nooda')} 
-                onMouseLeave={handleMouseLeave}
-                style={{ cursor: 'none'}}
-            >
-                <img className='col-12 col-md-6 vh-100 p-0 object-fit-cover' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728091/Screenshot_2025-03-11_at_18.31.40_legjo6.png" alt=""/>
-                <img className='col-12 col-md-6 vh-100 p-0 object-fit-cover' src="https://res.cloudinary.com/ddp4eyyfs/image/upload/v1741728088/Screenshot_2025-03-11_at_18.32.02_qylapa.png" alt=""/>
-            </Link>
-            <Link 
-                to='/client/3'
-                onMouseEnter={() => handleHoverEnter('brava sushi')} 
-                onMouseLeave={handleMouseLeave}
-                style={{ cursor: 'none'}}
-            >
-                <video 
-                    autoPlay 
-                    muted 
-                    loop 
-                    playsInline 
-                    controls={false} 
-                    className="d-block pe-none vh-100 w-100 object-fit-cover">
-                    <source src="https://res.cloudinary.com/ddp4eyyfs/video/upload/v1741730288/brava_r2rvkg.mp4" type="video/mp4" />
-                </video>
-            </Link>
-        </section>
-    )
-}
+                    <div className="container-title ms-5">
+                        <h1 className="d-inline-block justified">
+                            Leonardo Cadore. Content producer, videomaker & photographer
+                        </h1>
+                    </div>
+                    <div className="w-100 h-100 overflow-hidden">
+                        <Projects videoRefs={videoRefs} onHover={setIsHovering} />
+                    </div>
+                </section>
+                {contentPreloader && (
+                    <>
+                        <Videos className="videos-first" videos={[
+                            'https://dl.dropbox.com/scl/fi/xaxvcvfu719xwdju6cykq/croqueta-final-narrado.mov?rlkey=pfvxjgjotcaebphkuz855jbsk&st=3imrfq73&dl=1',
+                            'https://dl.dropbox.com/scl/fi/6kfccm8ovq72g0ivrgf59/CP-FOOOOD.mov?rlkey=n90eohsiivy9s010ixynhl8za&st=bonqoigi&dl=1',
+                            'https://dl.dropbox.com/scl/fi/5i5ahmcuohtjfg6wqzrub/CP-SPLASHES-3.mov?rlkey=eignm8ia9f05v3di28oz3wnyg&st=4gu7ckqh&dl=1',   
+                        ]}/>
+                        <Videos className="videos-second" videos={[
+                            'https://dl.dropbox.com/scl/fi/8ecx8xorxmzcq7grwrjob/81DE3613-D6D7-47DD-9855-74C74A0B70BF.MOV?rlkey=r27t9pjrhrmonu4934ao5rgra&st=o7mzm553&dl=1',
+                            'https://dl.dropbox.com/scl/fi/c7c0h5yf5afdwc1bypnqe/6F58BB04-5F8E-41AA-A05E-B17F5A710D2B.MOV?rlkey=fc9d056xg558oeweb9v9ifexd&st=hcl0ja07&dl=1',
+                            'https://dl.dropbox.com/scl/fi/9vmal846gmso7jjj5toec/849FB8C9-7C22-4A33-A1E7-020A25E40535.MOV?rlkey=uqonzjooqhwhjpvdzv24x1lp6&st=t7vtzwkg&dl=1',
+                        ]}/>
+                        <Videos className="videos-third" videos={[
+                            'https://dl.dropbox.com/scl/fi/mymx8v8thu50lad7034d4/ninipakaa.mov?rlkey=ejq28xvde0z07d33nyyaodtdj&st=sgv2lf0y&dl=1',
+                            'https://dl.dropbox.com/scl/fi/su4w22diw0q9fabmok7dw/nini3.mov?rlkey=6mdkl3c2ql33nl5ktj073kwnu&st=oee5z0wb&dl=1',
+                            'https://dl.dropbox.com/scl/fi/yl5d5xkq0xpjfij36rjo3/nini-x-paka.mov?rlkey=2lj8urdsd3xmtjil6o7k3am6d&st=qq59moz8&dl=1',
+                        ]}/>
+                        <Videos className="videos-fourth" videos={[
+                            'https://dl.dropbox.com/scl/fi/86ngkzxmyuotvmvxqt5zc/03C51E3D-2427-4EF7-A24A-D5D66D1922C9.MOV?rlkey=dwke0636tvf0n6cnbkddbd7rg&st=uiay72ux&dl=1',
+                            'https://dl.dropbox.com/scl/fi/xp0yka8o19s1bkrca94qd/nooda-oil-hand.mov?rlkey=n3fu2pop9bf95frlouta9clwy&st=q5vlszgv&dl=1',
+                            'https://dl.dropbox.com/scl/fi/cnwvrlvvt7gcvl5nsvcqa/reelll-2.mov?rlkey=jsjnpn3p4nv4tddj2x8a9gwdi&st=2xxxxwvl&dl=1',
+                        ]}/>
+                        
+                        <About />
 
-export default Home
+                        <Videos className="videos-fifth" videos={[
+                            'https://dl.dropbox.com/scl/fi/c7c0h5yf5afdwc1bypnqe/6F58BB04-5F8E-41AA-A05E-B17F5A710D2B.MOV?rlkey=fc9d056xg558oeweb9v9ifexd&st=hcl0ja07&dl=1',
+                            'https://dl.dropbox.com/scl/fi/9vmal846gmso7jjj5toec/849FB8C9-7C22-4A33-A1E7-020A25E40535.MOV?rlkey=uqonzjooqhwhjpvdzv24x1lp6&st=t7vtzwkg&dl=1',
+                        ]}/>
+                        <Videos className="videos-sixth" videos={[
+                            'https://dl.dropbox.com/scl/fi/rs3588h35drr2mffs7d68/roxo-dress.mov?rlkey=lufu2wo2yxxgsvw4z1y3bguit&st=h5yagbh9&dl=1',
+                            'https://dl.dropbox.com/scl/fi/yqo9628n6aqqo2xuk4un0/paka-autumn.mov?rlkey=g4j9yzovrna4w8jx7uxindlup&st=tjv5i9n0&dl=1',
+                        ]}/>
+                        <Videos className="videos-seventh" videos={[
+                            'https://dl.dropbox.com/scl/fi/9r8nmat423nj302ravmvn/christy-meshel-final-video.mov?rlkey=p1yjfcouaahdmicnxlocsxlrb&st=1iimfcuw&dl=1',
+                            'https://dl.dropbox.com/scl/fi/gmu6nb5dmmpkhmg0pul7o/auto-gentileza-final-version.mp4?rlkey=3y669x6wukfgmaow7rwg0gcc6&st=m9uur027&dl=1',
+                        ]}/>
+
+                        {/* Scroll container for reveal animations */}
+                        <div className="scroll-container" />
+                    </>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default Home;

@@ -1,12 +1,20 @@
 function About() {
     return (
-        <section className="vh-50 flex row w-80 m-auto py-1 text-light">
-            <p className="col-3">Leonardo Cadore</p>
-            <ul className="col-3 offset-5 inline-flex list-unstyled">
-                <li>About</li>
-                <li>Contact</li>
-            </ul>
-            <p className="col-6 offset-2 text-end">Email</p>
+        <section className="stacked-section about">
+            <div className="vw-100 vh-100 d-flex justify-content-center align-items-center p-5 m-0">
+                <div className="d-flex justify-content-center align-items-center text-light">
+                    <p className='font-script about-text justified'>
+                        Who I vibe with? Rule-breakers, storytellers, taste-makers. The ones who build their own lane - and don't wait for permission to create.
+                    </p>
+                </div>
+                <div className="position-absolute top-0 vh-100 d-flex justify-content-center align-items-center gap-1 pb-5">
+                    <img 
+                        src="https://dl.dropbox.com/scl/fi/54wghmpt6ukpaqv6blge6/76CB04BD-EC8A-4BC5-9815-5C2D9F8E230F.JPG?rlkey=j8u5crptxsi8r6h9bje9zyfca&st=w22dbcgb&dl=1" 
+                        alt="" 
+                        className='about-image object-fit-contain'
+                    />
+                </div>
+            </div>
         </section>
     )
 }
