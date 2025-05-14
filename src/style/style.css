@@ -102,6 +102,12 @@ footer {
         font-size: 40px;
         text-transform: uppercase;
         color: var(--primary-color);
+        pointer-events: auto;
+        transition: transform 0.3s ease-out;
+
+        &:hover {
+            transform: scale(0.95) translateZ(-20px);
+        }
     }
 
     @media (max-width: 1199px) {
@@ -123,12 +129,16 @@ footer {
 
 .container-title h1 {
     transform-origin: center center;
-    transition: transform .5s linear;
+    transition: all 0.5s ease-out;
 }
 
 .container-title.shrink h1 {
     transform: scale(0.8);
     transform-origin: center center;
+}
+
+.container-title.shrink h1:hover {
+    transform: scale(0.75) translateZ(-20px);
 }
 
 .justified {
@@ -349,10 +359,6 @@ body.scroll-locked {
         width: 90%;
     }
 
-    @media (max-width: 991px) {
-        width: 100%;
-    }
-
     @media (max-width: 767px) {
         flex-direction: column;
         width: 100%;
@@ -361,7 +367,7 @@ body.scroll-locked {
     video {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
 }
 
