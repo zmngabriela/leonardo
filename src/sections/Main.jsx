@@ -81,7 +81,6 @@ const Main = () => {
                     <Videos className="videos-second" videos={[
                         'https://dl.dropbox.com/scl/fi/8ecx8xorxmzcq7grwrjob/81DE3613-D6D7-47DD-9855-74C74A0B70BF.MOV?rlkey=r27t9pjrhrmonu4934ao5rgra&raw=1',
                         'https://dl.dropbox.com/scl/fi/c7c0h5yf5afdwc1bypnqe/6F58BB04-5F8E-41AA-A05E-B17F5A710D2B.MOV?rlkey=fc9d056xg558oeweb9v9ifexd&raw=1',
-                        'https://dl.dropbox.com/scl/fi/9vmal846gmso7jjj5toec/849FB8C9-7C22-4A33-A1E7-020A25E40535.MOV?rlkey=uqonzjooqhwhjpvdzv24x1lp6&raw=1',
                     ]}/>
                     <Videos className="videos-third" videos={[
                         'https://dl.dropbox.com/scl/fi/mymx8v8thu50lad7034d4/ninipakaa.mov?rlkey=ejq28xvde0z07d33nyyaodtdj&raw=1',
@@ -90,7 +89,7 @@ const Main = () => {
                     ]}/>
                     <Videos className="videos-fourth" videos={[
                         'https://dl.dropbox.com/scl/fi/xp0yka8o19s1bkrca94qd/nooda-oil-hand.mov?rlkey=n3fu2pop9bf95frlouta9clwy&raw=1',
-                        'https://dl.dropbox.com/scl/fi/cnwvrlvvt7gcvl5nsvcqa/reelll-2.mov?rlkey=jsjnpn3p4nv4tddj2x8a9gwdi&raw=1',
+                        'https://dl.dropbox.com/scl/fi/cnwvrlvvt7gcvl5nsvcqa/reelll-2.mov?rlkey=jsjnpn3p4nv4tddj2x8a9gwdi&st=2xxxxwvl&raw=1',
                         'https://dl.dropbox.com/scl/fi/86ngkzxmyuotvmvxqt5zc/03C51E3D-2427-4EF7-A24A-D5D66D1922C9.MOV?rlkey=dwke0636tvf0n6cnbkddbd7rg&raw=1',
                     ]}/>
                     
@@ -112,6 +111,7 @@ const Main = () => {
                     <Videos className="videos-seventh" videos={[
                         'https://dl.dropbox.com/scl/fi/9r8nmat423nj302ravmvn/christy-meshel-final-video.mov?rlkey=p1yjfcouaahdmicnxlocsxlrb&raw=1',
                         'https://dl.dropbox.com/scl/fi/gmu6nb5dmmpkhmg0pul7o/auto-gentileza-final-version.mp4?rlkey=3y669x6wukfgmaow7rwg0gcc6&raw=1',
+                        
                     ]}/>
 
                     {/* Scroll container for reveal animations */}

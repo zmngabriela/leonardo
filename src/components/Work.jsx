@@ -50,7 +50,7 @@ const Work = ({videoRefs, onHover}) => {
         const scrollTop = container.scrollTop;
         
         // Controla o shrink do título
-        const shouldShrink = scrollTop > 100 && scrollTop < 5000;
+        const shouldShrink = scrollTop > 100 && scrollTop < 3000;
         document.querySelector('.container-title')?.classList.toggle('shrink', shouldShrink);
 
         if (scrollTop < container.clientHeight) {
@@ -65,7 +65,7 @@ const Work = ({videoRefs, onHover}) => {
             className="work-container" 
             onScroll={handleScroll}
         >
-            <ul className='row list-unstyled' style={{ paddingBlock: '100vh'}}>
+            <ul className='row list-unstyled' style={{ paddingTop: '100vh', paddingBottom: '60vh'}}>
                 {projetos.map((p, i) => (
                     <li key={i} className="work-list">
                         <div className="work-wrapper">

@@ -164,7 +164,7 @@ footer {
     transition: transform 0.3s ease-out;
     transform-style: preserve-3d;
     will-change: transform;
-    padding: 160px;
+    padding: 80px 160px;
 
     @media (max-width: 1199px) {
         padding: 60px;
@@ -183,7 +183,7 @@ footer {
     }
 
     @media (max-width: 767px) {
-        padding: 20px;
+        padding: 40px 20px;
 
         .work {
             max-height: 320px;
@@ -191,7 +191,7 @@ footer {
     }
 
     @media (max-width: 575px) {
-        padding: 0px;
+        padding: 40px 0px;
 
         .work {
             max-height: 200px;
@@ -374,8 +374,14 @@ body.scroll-locked {
 /* Quando tem apenas 2 vídeos */
 .videos-list:has(li:nth-child(2):last-child) .video-item {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    &:nth-child(1) {
+        justify-content: end;
+    }
+
+    &:nth-child(2) {
+        justify-content: start;
+    }
 
     video {
         width: 80%;
