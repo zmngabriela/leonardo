@@ -80,7 +80,6 @@ const Main = () => {
                     ]}/>
                     <Videos className="videos-second" videos={[
                         'https://dl.dropbox.com/scl/fi/8ecx8xorxmzcq7grwrjob/81DE3613-D6D7-47DD-9855-74C74A0B70BF.MOV?rlkey=r27t9pjrhrmonu4934ao5rgra&raw=1',
-                        'https://dl.dropbox.com/scl/fi/fg58jgun3zz6ev6u77992/DF321BAD-7B74-43CD-83C8-1E6A4CE50760.MOV?rlkey=gkmdq6wrbnp0n4v9iixe7c8hz&st=k5mo6l1j&raw=1',
                         'https://dl.dropbox.com/scl/fi/c7c0h5yf5afdwc1bypnqe/6F58BB04-5F8E-41AA-A05E-B17F5A710D2B.MOV?rlkey=fc9d056xg558oeweb9v9ifexd&raw=1',
                     ]}/>
                     <Videos className="videos-third" videos={[
@@ -100,6 +99,7 @@ const Main = () => {
                         'https://www.dropbox.com/scl/fi/3fdi9p630j5c4ru35hot0/noodaoil-99.jpg?rlkey=gpcdotbk4dv678ep7pps2gkn0&raw=1&size=1024x1024&preserve_transparency=0',
                         'https://www.dropbox.com/scl/fi/nc6k669j60km0cu04v79u/noodaoil-70.jpg?rlkey=3zcwpi9a30hi8o0cz8r74z8fu&raw=1&size=1024x1024&preserve_transparency=0'
                     ]}/>
+
                     <Photos className="photos-second" images={[
                         'https://www.dropbox.com/scl/fi/ek455bav2liti9ab315uo/noodaoil-51.jpg?rlkey=xkoiqxtv6yzw4udexk27br1og&raw=1&size=1024x1024&preserve_transparency=0',
                         'https://www.dropbox.com/scl/fi/f11cccszjkv5y5z4y3lwz/noodaoil-15.jpg?rlkey=yzjj291ix9wbub0pcxczu14nf&raw=1&size=1024x1024&preserve_transparency=0'
