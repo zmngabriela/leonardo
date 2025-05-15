@@ -12,7 +12,7 @@ const Videos = ({ videos, className }) => {
                             controls={false}
                             loading="lazy"
                             preload="none"
-                            poster={`${video}?raw=1`}
+                            poster={video}
                         >
                             <source src={video} type="video/mp4" />
                         </video>
