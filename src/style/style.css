@@ -164,13 +164,13 @@ footer {
     transition: transform 0.3s ease-out;
     transform-style: preserve-3d;
     will-change: transform;
-    padding: 80px 160px;
+    padding: 80px 90px;
 
     @media (max-width: 1199px) {
         padding: 60px;
 
         .work {
-            max-height: 400px;
+            max-height: 500px;
         }
     }
 
@@ -201,7 +201,7 @@ footer {
 
 .work {
     width: 100%;
-    max-height: 700px;
+    max-height: 600px;
     transform-origin: center center;
 }
 
