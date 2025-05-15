@@ -263,14 +263,13 @@ body.scroll-locked {
 
 .videos-list {
     width: 90%;
-    height: 80vh;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     gap: 10px;
     list-style: none;
     padding: 0;
-
+    
     video {
         width: 100%;
         height: 100%;
