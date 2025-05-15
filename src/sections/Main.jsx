@@ -80,6 +80,7 @@ const Main = () => {
                     ]}/>
                     <Videos className="videos-second" videos={[
                         'https://dl.dropbox.com/scl/fi/8ecx8xorxmzcq7grwrjob/81DE3613-D6D7-47DD-9855-74C74A0B70BF.MOV?rlkey=r27t9pjrhrmonu4934ao5rgra&raw=1',
+                        'https://dl.dropbox.com/scl/fi/fg58jgun3zz6ev6u77992/DF321BAD-7B74-43CD-83C8-1E6A4CE50760.MOV?rlkey=gkmdq6wrbnp0n4v9iixe7c8hz&st=k5mo6l1j&raw=1',
                         'https://dl.dropbox.com/scl/fi/c7c0h5yf5afdwc1bypnqe/6F58BB04-5F8E-41AA-A05E-B17F5A710D2B.MOV?rlkey=fc9d056xg558oeweb9v9ifexd&raw=1',
                     ]}/>
                     <Videos className="videos-third" videos={[

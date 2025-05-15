@@ -1,6 +1,6 @@
 const Videos = ({ videos, className }) => {
     return (
-        <section className={`stacked-section ${className} vh-100 d-flex align-items-center justify-content-center`}>
+        <section className={`stacked-section ${className}`}>
             <ul className="videos-list">
                 {videos.map((video, i) => (
                     <li key={i} className="flex-grow-1 video-item">
