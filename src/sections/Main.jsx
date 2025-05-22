@@ -109,11 +109,11 @@ const Main = () => {
                         'https://dl.dropbox.com/scl/fi/rs3588h35drr2mffs7d68/roxo-dress.mov?rlkey=lufu2wo2yxxgsvw4z1y3bguit&raw=1',
                         'https://dl.dropbox.com/scl/fi/yqo9628n6aqqo2xuk4un0/paka-autumn.mov?rlkey=g4j9yzovrna4w8jx7uxindlup&raw=1',
                     ]}/>
-                    <Videos className="videos-seventh" videos={[
+                    {/* <Videos className="videos-seventh" videos={[
                         'https://dl.dropbox.com/scl/fi/9r8nmat423nj302ravmvn/christy-meshel-final-video.mov?rlkey=p1yjfcouaahdmicnxlocsxlrb&raw=1',
                         'https://dl.dropbox.com/scl/fi/gmu6nb5dmmpkhmg0pul7o/auto-gentileza-final-version.mp4?rlkey=3y669x6wukfgmaow7rwg0gcc6&raw=1',
                         
-                    ]}/>
+                    ]}/> */}
 
                     {/* Scroll container for reveal animations */}
                     <div className="scroll-container" />
