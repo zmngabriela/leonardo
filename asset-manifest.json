@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/leo-portfolio/static/css/main.cbfe36e1.css",
-    "main.js": "/leo-portfolio/static/js/main.09815d7f.js",
-    "static/js/453.a6ea2a4d.chunk.js": "/leo-portfolio/static/js/453.a6ea2a4d.chunk.js",
-    "static/media/HelveticaNeueThin.otf": "/leo-portfolio/static/media/HelveticaNeueThin.69715fdffa5218e05ef8.otf",
-    "static/media/Lousiana.otf": "/leo-portfolio/static/media/Lousiana.a94307ab00c30f4939c4.otf",
-    "index.html": "/leo-portfolio/index.html",
-    "main.cbfe36e1.css.map": "/leo-portfolio/static/css/main.cbfe36e1.css.map",
-    "main.09815d7f.js.map": "/leo-portfolio/static/js/main.09815d7f.js.map",
-    "453.a6ea2a4d.chunk.js.map": "/leo-portfolio/static/js/453.a6ea2a4d.chunk.js.map"
+    "main.css": "/static/css/main.2f692cd3.css",
+    "main.js": "/static/js/main.521ed2df.js",
+    "static/js/453.a6ea2a4d.chunk.js": "/static/js/453.a6ea2a4d.chunk.js",
+    "static/media/HelveticaNeueThin.otf": "/static/media/HelveticaNeueThin.69715fdffa5218e05ef8.otf",
+    "static/media/Lousiana.otf": "/static/media/Lousiana.a94307ab00c30f4939c4.otf",
+    "index.html": "/index.html",
+    "main.2f692cd3.css.map": "/static/css/main.2f692cd3.css.map",
+    "main.521ed2df.js.map": "/static/js/main.521ed2df.js.map",
+    "453.a6ea2a4d.chunk.js.map": "/static/js/453.a6ea2a4d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cbfe36e1.css",
-    "static/js/main.09815d7f.js"
+    "static/css/main.2f692cd3.css",
+    "static/js/main.521ed2df.js"
   ]
 }
