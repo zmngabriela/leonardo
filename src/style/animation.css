@@ -53,6 +53,32 @@
     animation: preloader-header .5s ease-in-out;
 }
 
+@keyframes preloader-footer {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.preloader-footer {
+    animation: preloader-footer .5s ease-in-out;
+}
+
+@keyframes preloader-main {
+    0% {
+        transform: scale(.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.preloader-main {
+    animation: preloader-main .8s ease-in-out;
+}
+
 /* CONTENT SCALER */
 .project-scaler {
     transform: scale3d(1.2, 1.2, 1);
