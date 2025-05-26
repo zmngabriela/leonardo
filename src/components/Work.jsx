@@ -50,7 +50,7 @@ const Work = ({videoRefs, onHover}) => {
         const scrollTop = container.scrollTop;
         
         // Controla o shrink do título
-        const shouldShrink = scrollTop > 100 && scrollTop < 3000;
+        const shouldShrink = scrollTop > 100 && scrollTop < 4000;
         document.querySelector('.container-title')?.classList.toggle('shrink', shouldShrink);
 
         if (scrollTop < container.clientHeight) {
