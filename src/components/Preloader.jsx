@@ -4,7 +4,7 @@ const Preloader = () => {
         const [startPreloader, setStartPreloader] = useState(false);
         const [hidden, setHidden] = useState(false);
 
-        // PRELOADER FOR CONTENT
+        // preloader timers
             useEffect(() => {
                 const startTimer = setTimeout(() => {
                     setStartPreloader(true);

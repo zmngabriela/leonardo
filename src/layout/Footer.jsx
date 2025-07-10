@@ -4,7 +4,7 @@ function Footer() {
     const year = new Date().getFullYear()
     const [isVisible, setIsVisible] = useState(false);
     
-    // effect to show the footer after the preloader
+    // show footer after preloader
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsVisible(true);
@@ -17,10 +17,10 @@ function Footer() {
             className={`fixed-bottom gap-5 d-flex pb-4 px-4 ${isVisible ? 'preloader-footer' : 'd-none'}`}
             style={{ mixBlendMode: 'difference' }}
         >
-            <div className="w-50 w-md-25 d-flex flex-column">
+            <div className="w-75 w-md-25 d-flex flex-column">
                 <p className="m-0">Brazilian Based in Barcelona</p>
             </div>
-            <p>&copy; {year}</p>
+            <p className="w-25">&copy;{year}</p>
         </footer>
     )
 }

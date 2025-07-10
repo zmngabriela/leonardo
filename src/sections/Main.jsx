@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Hero from "./Hero";
 import Projects from "../components/Work";
 import About from "../components/About";
@@ -10,13 +10,15 @@ const Main = () => {
     const [activeProject, setActiveProject] = useState(null);
     const videoRefs = useRef([]);
     const mainRef = useRef(null);
+    const scrollTimeoutRef = useRef(null);
+    const lastScrollTimeRef = useRef(0);
 
-    // effect to change the background color when hovering the project
+    // handle background color change on project hover
     const handleProjectHover = (projectIndex) => {
         setActiveProject(projectIndex ? `var(--project-color-${projectIndex})` : null);
     };
 
-    // effect to show the content after the preloader
+    // show content after preloader
     useEffect(() => {
         const timer = setTimeout(() => {
             setContentPreloader(true);
@@ -24,7 +26,7 @@ const Main = () => {
         return () => clearTimeout(timer);
     }, []);
 
-    // effect to show the content after the preloader
+    // intersection observer for video animations
     useEffect(() => {
         const observer = new IntersectionObserver(
             entries => {
@@ -52,18 +54,108 @@ const Main = () => {
         };
     }, [contentPreloader]);
 
-    // setting property scroll
-    useEffect(() => {
-        const handleScroll = () => {
-            const html = document.documentElement;
-            const scrollVh = html.scrollTop / html.clientHeight;
-            html.style.setProperty('--scroll', scrollVh);
-        };
+    // throttled scroll handler for better performance
+    const handleScroll = useCallback(() => {
+        const now = Date.now();
+        const isMobile = window.innerWidth <= 768;
+        const throttleDelay = isMobile ? 32 : 16; // 30fps on mobile, 60fps on desktop
         
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
+        if (now - lastScrollTimeRef.current < throttleDelay) {
+            return;
+        }
+        
+        lastScrollTimeRef.current = now;
+        
+        const html = document.documentElement;
+        const scrollVh = html.scrollTop / html.clientHeight;
+        html.style.setProperty('--scroll', scrollVh);
     }, []);
+
+    // scroll event listener with mobile optimizations
+    useEffect(() => {
+        const isMobile = window.innerWidth <= 768;
+        
+        // use passive listener for better performance
+        const options = { passive: true };
+        
+        if (isMobile) {
+            // aggressive throttling for mobile
+            const throttledScroll = () => {
+                if (scrollTimeoutRef.current) {
+                    return;
+                }
+                
+                scrollTimeoutRef.current = setTimeout(() => {
+                    handleScroll();
+                    scrollTimeoutRef.current = null;
+                }, 32); // ~30fps
+            };
+            
+            window.addEventListener('scroll', throttledScroll, options);
+            handleScroll(); // initial call
+            
+            return () => {
+                window.removeEventListener('scroll', throttledScroll, options);
+                if (scrollTimeoutRef.current) {
+                    clearTimeout(scrollTimeoutRef.current);
+                }
+            };
+        } else {
+            // normal throttling for desktop
+            window.addEventListener('scroll', handleScroll, options);
+            handleScroll(); // initial call
+            
+            return () => window.removeEventListener('scroll', handleScroll, options);
+        }
+    }, [handleScroll]);
+
+    // lazy load sections for mobile performance
+    useEffect(() => {
+        if (!contentPreloader) return;
+
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            // mobile: use intersection observer for performance
+            const sectionObserver = new IntersectionObserver(
+                entries => {
+                    entries.forEach(entry => {
+                        const section = entry.target;
+                        const isNearViewport = entry.isIntersecting || 
+                                             entry.boundingClientRect.top < window.innerHeight * 2;
+                        
+                        if (isNearViewport) {
+                            section.classList.add('section-active');
+                        } else {
+                            section.classList.remove('section-active');
+                        }
+                    });
+                },
+                {
+                    rootMargin: '100% 0px', // start loading 100% of viewport height before
+                    threshold: 0
+                }
+            );
+
+            // observe all stacked sections
+            const sections = document.querySelectorAll('.stacked-section');
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            return () => {
+                sections.forEach(section => {
+                    sectionObserver.unobserve(section);
+                });
+            };
+        } else {
+            // desktop: activate all sections immediately for best performance
+            const sections = document.querySelectorAll('.stacked-section');
+            sections.forEach(section => {
+                section.classList.add('section-active');
+            });
+        }
+    }, [contentPreloader]);
 
     return (
         <main ref={mainRef}>

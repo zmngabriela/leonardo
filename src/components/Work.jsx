@@ -8,13 +8,13 @@ const Work = ({videoRefs, onHover}) => {
         'https://dl.dropbox.com/scl/fi/4g1b59myca5nlzqkcyupc/NOODA-V5-SIN-TEXTOS-VERSAO-FINAL.mp4?rlkey=6w24tjdmojqxusgl73uvwkmhh&raw=1',
     ];
 
-    // effect to rotate the video
+    // 3d rotation effect on mouse move
     const handleMouseMove = (event, element) => {
         const rect = element.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         
-        // Calculate the percentage of mouse position within the element
+        // calculate mouse position percentage within element
         const xPercent = (x / rect.width - 0.5) * 2; // -1 to 1
         const yPercent = (y / rect.height - 0.5) * 2; // -1 to 1
         
@@ -29,27 +29,27 @@ const Work = ({videoRefs, onHover}) => {
         }
     };
 
-    // effect to rotate the video
+    // reset rotation on mouse leave
     const handleMouseLeave = (element) => {
         const wrapper = element.closest('.work-wrapper');
         if (wrapper) {
             wrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
         }
-        // reset the hover state to change the background color
+        // reset hover state to change background color
         onHover(null);
     };
 
-    // effect to change the background color when hovering the video
+    // change background color on video hover
     const handleMouseEnter = (index) => {
         onHover(index + 1);
     };
 
-    // effect to shrink the title when scrolling
+    // shrink title on scroll
     const handleScroll = (e) => {
         const container = e.target;
         const scrollTop = container.scrollTop;
         
-        // Controla o shrink do título
+        // control title shrink
         const shouldShrink = scrollTop > 100 && scrollTop < 4000;
         document.querySelector('.container-title')?.classList.toggle('shrink', shouldShrink);
 

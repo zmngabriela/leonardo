@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const Hero = ({ backgroundColor, children }) => {
     const [isVisible, setIsVisible] = useState(false);
         
-        // effect to show the footer after the preloader
+        // show footer after preloader
         useEffect(() => {
             const timer = setTimeout(() => {
                 setIsVisible(true);

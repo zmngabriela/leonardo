@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const Header = () => {
     const [isVisible, setIsVisible] = useState(false);
 
-    // effect to show the header after the preloader
+    // show header after preloader
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsVisible(true);

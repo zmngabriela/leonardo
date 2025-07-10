@@ -3,7 +3,7 @@ const Videos = ({ videos, className }) => {
         <section className={`stacked-section ${className}`}>
             <ul className="videos-list">
                 {videos.map((video, i) => (
-                    <li key={i} className="flex-grow-1 video-item">
+                    <li key={i} className="video-item">
                         <video 
                             autoPlay 
                             muted 

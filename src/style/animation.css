@@ -1,4 +1,4 @@
-/* PRELOADERS */
+/* preloaders */
 @keyframes preloader-start {
     0% {
         transform: translateY(0);
@@ -79,7 +79,7 @@
     animation: preloader-main .8s ease-in-out;
 }
 
-/* CONTENT SCALER */
+/* content scaler */
 .project-scaler {
     transform: scale3d(1.2, 1.2, 1);
     transition: transform 0.6s ease;
