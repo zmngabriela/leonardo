@@ -2,8 +2,8 @@ const Videos = ({ videos, className }) => {
     return (
         <section className={`stacked-section ${className}`}>
             <ul className="videos-list">
-                {videos.map((video, i) => (
-                    <li key={i} className="video-item">
+                {videos.map((videoName, i) => (
+                    <li key={i}>
                         <video 
                             autoPlay 
                             muted 
@@ -12,9 +12,8 @@ const Videos = ({ videos, className }) => {
                             controls={false}
                             loading="lazy"
                             preload="none"
-                            poster={video}
                         >
-                            <source src={video} type="video/mp4" />
+                            <source src={`${process.env.PUBLIC_URL}/optimized-videos/${videoName}`} type="video/mp4" />
                         </video>
                     </li>
                 ))}

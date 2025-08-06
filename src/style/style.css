@@ -150,8 +150,8 @@ footer {
     text-align: justify;
 }
 
-/* WORK CONTAINER */
-.work-container {
+/* HERO CONTENT CONTAINER */
+.hero-content-container {
     height: 100vh;
     overflow: auto;
     position: relative;
@@ -160,11 +160,11 @@ footer {
     -ms-overflow-style: none; /* IE and Edge */
 }
 
-.work-container::-webkit-scrollbar {
+.hero-content-container::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
 }
 
-.work-wrapper {
+.hero-content-wrapper {
     position: relative;
     transition: transform 0.3s ease-out;
     transform-style: preserve-3d;
@@ -174,7 +174,7 @@ footer {
     @media (max-width: 1199px) {
         padding: 60px;
 
-        .work {
+        .hero-content {
             max-height: 500px;
         }
     }
@@ -182,7 +182,7 @@ footer {
     @media (max-width: 991px) {
         padding: 40px;
 
-        .work {
+        .hero-content {
             max-height: 400px;
         }
     }
@@ -190,7 +190,7 @@ footer {
     @media (max-width: 767px) {
         padding: 40px 20px;
 
-        .work {
+        .hero-content {
             max-height: 320px;
         }
     }
@@ -198,41 +198,42 @@ footer {
     @media (max-width: 575px) {
         padding: 40px 0px;
 
-        .work {
+        .hero-content {
             max-height: 200px;
         }
     }
 }
 
-.work {
+.hero-content {
     width: 100%;
     max-height: 600px;
     transform-origin: center center;
+    border-radius: 4px;
 }
 
-.work-list {
+.hero-content-list {
     margin-bottom: 0vh;
 }
 
-.work-list:nth-child(even) {
+.hero-content-list:nth-child(even) {
     margin-left: auto;
     margin-right: 15%;
     width: 45%;
 }
 
-.work-list:nth-child(odd) {
+.hero-content-list:nth-child(odd) {
     margin-right: auto;
     margin-left: 10%;
     width: 45%;
 }
 
-.work-scaler {
+.hero-content-scaler {
     transform: scale3d(1.2, 1.2, 1);
     transition: transform 0.6s ease;
     will-change: transform;
 }
 
-.work-scaler.in-view {
+.hero-content-scaler.in-view {
     transform: scale3d(1, 1, 1);
 }
 
@@ -249,7 +250,7 @@ body.scroll-locked {
 .scroll-container {
     position: relative;
     z-index: 0;
-    height: 700vh;
+    height: 800vh;
     pointer-events: none;
 }
 
@@ -260,11 +261,49 @@ body.scroll-locked {
     width: 100vw;
     height: 100vh;
     background-color: black;
-    will-change: clip-path;
-    transition: clip-path 0.05s linear;
+    
     display: flex;
     align-items: center;
     justify-content: center;
+
+    will-change: clip-path;
+    transition: clip-path 0.05s linear;
+    /* initially hide sections that are far from viewport */
+    clip-path: inset(100% 0 0 0);
+}
+
+/* only apply clip-path calculations when section is active */
+.stacked-section.section-active {
+    clip-path: inset(calc(100% - (var(--scroll) * 100%)) 0 0 0);
+}
+
+/* specific clip-path for each section when active */
+.stacked-section.section-active.videos-first {
+    clip-path: inset(calc(100% - (var(--scroll) * 100%)) 0 0 0);
+}
+
+.stacked-section.section-active.videos-second {
+    clip-path: inset(calc(200% - (var(--scroll) * 100%)) 0 0 0);
+}
+
+.stacked-section.section-active.videos-third {
+    clip-path: inset(calc(300% - (var(--scroll) * 100%)) 0 0 0);
+}
+
+.stacked-section.section-active.videos-fourth {
+    clip-path: inset(calc(400% - (var(--scroll) * 100%)) 0 0 0);
+}
+
+.stacked-section.section-active.photos-first {
+    clip-path: inset(calc(500% - (var(--scroll) * 100%)) 0 0 0);
+}
+
+.stacked-section.section-active.videos-sixth {
+    clip-path: inset(calc(600% - (var(--scroll) * 100%)) 0 0 0);
+}
+
+.stacked-section.section-active.about {
+    clip-path: inset(calc(700% - (var(--scroll) * 100%)) 0 0 0);
 }
 
 /* mobile optimizations */
@@ -274,103 +313,27 @@ body.scroll-locked {
         transition: clip-path 0.02s linear;
         /* transform3d to force hardware acceleration */
         transform: translate3d(0, 0, 0);
-        /* initially hide sections that are far from viewport */
-        clip-path: inset(100% 0 0 0);
-        height: 300vh;
-
-        .videos-list {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .videos-list:has(li:nth-child(2):last-child) { 
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            width: 100%;
-        }
-    }
-    
-    /* only apply clip-path calculations when section is active */
-    .stacked-section.section-active {
-        clip-path: inset(calc(100vh - (var(--scroll) * 100vh)) 0 0 0);
-    }
-    
-    /* specific clip-path for each section when active */
-    .stacked-section.section-active.videos-first {
-        clip-path: inset(calc(100vh - (var(--scroll) * 100vh)) 0 0 0);
-    }
-    
-    .stacked-section.section-active.videos-second {
-        clip-path: inset(calc(200vh - (var(--scroll) * 100vh)) 0 0 0);
-    }
-    
-    .stacked-section.section-active.videos-third {
-        clip-path: inset(calc(300vh - (var(--scroll) * 100vh)) 0 0 0);
-    }
-    
-    .stacked-section.section-active.videos-fourth {
-        clip-path: inset(calc(400vh - (var(--scroll) * 100vh)) 0 0 0);
-    }
-    
-    .stacked-section.section-active.videos-sixth {
-        clip-path: inset(calc(500vh - (var(--scroll) * 100vh)) 0 0 0);
-    }
-    
-    .stacked-section.section-active.about {
-        clip-path: inset(calc(600vh - (var(--scroll) * 100vh)) 0 0 0);
-    }
-}
-
-/* desktop: sections are always active and visible */
-@media (min-width: 769px) {
-    .stacked-section {
-        /* ensure sections are visible by default on desktop */
-        clip-path: inset(calc(100% - (var(--scroll) * 100%)) 0 0 0);
-    }
-    
-    .stacked-section.videos-first {
-        clip-path: inset(calc(100% - (var(--scroll) * 100%)) 0 0 0);
-    }
-    
-    .stacked-section.videos-second {
-        clip-path: inset(calc(200% - (var(--scroll) * 100%)) 0 0 0);
-    }
-    
-    .stacked-section.videos-third {
-        clip-path: inset(calc(300% - (var(--scroll) * 100%)) 0 0 0);
-    }
-    
-    .stacked-section.videos-fourth {
-        clip-path: inset(calc(400% - (var(--scroll) * 100%)) 0 0 0);
-    }
-    
-    .stacked-section.videos-sixth {
-        clip-path: inset(calc(500% - (var(--scroll) * 100%)) 0 0 0);
-    }
-    
-    .stacked-section.about {
-        clip-path: inset(calc(600% - (var(--scroll) * 100%)) 0 0 0);
     }
 }
 
 .videos-list {
-    width: 100%;
+    width: 80%;
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    gap: 10px;
     list-style: none;
     padding: 0;
     
     video {
         width: 100%;
-        height: 100vh;
+        height: 80vh;
         object-fit: contain;
+        border-radius: 8px;
+        -webkit-transform: translateZ(0);
     }
 }
+
 /* when there are only 2 videos */
 .videos-list:has(li:nth-child(2):last-child) {
     grid-template-columns: 1fr 1fr;
@@ -383,32 +346,42 @@ body.scroll-locked {
 
 .videos-second {
     z-index: 3;
-    background-color: var(--primary-color);
+    
 }
 
 .videos-third {
     z-index: 4;
+    background-color: var(--primary-color);
 }
 
 .videos-fourth {
     z-index: 5;
+    background-color: var(--primary-color);
+}
+
+.photos-first {
+    z-index: 6;
+    background-color: var(--primary-color);
 }
 
 .videos-sixth {
-    z-index: 6;
+    z-index: 7;
+    background-color: var(--background-color);
 }
 
 .stacked-section.about {
     background-color: var(--background-color);
-    z-index: 7;
+    z-index: 8;
 }
 
 .stacked-section.about .about-text {
     width: 20%;
     font-size: 25px;
+    min-width: 129px;
+    min-height: 240px;
 
     @media (max-width: 1199px) {
-        margin-bottom: 30px;
+        margin-bottom: 36px;
     }
 
     @media (max-width: 991px) {
@@ -420,11 +393,23 @@ body.scroll-locked {
         width: 80%;
         font-size: 20px;
     }
+
+    @media (max-width: 275px) {
+        display: none;
+    }
+
+    @media (max-height: 576px) {
+        height: 60%;
+        width: 15%;
+        font-size: 18px;
+        margin-bottom: 0;
+    }
 }
 
 .stacked-section.about .about-image {
     width: 25%;
-    border: 8px solid var(--primary-color);
+    min-width: 200px;
+    min-height: 246px;
 
     @media (max-width: 991px) {
         width: 40%;
@@ -437,8 +422,67 @@ body.scroll-locked {
     @media (max-width: 576px) {
         width: 75%;
     }
+
+    @media (max-height: 576px) {
+        height: 60%;
+        width: auto;
+    }
 }
 
-.stacked-section.about img {
-    border: 8px solid var(--primary-color);
+.photo-list {
+    width: 78%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.photo-item {
+    flex: 1;
+    height: 50vh;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.photo-item:hover {
+    flex: 1.5;
+    z-index: 10;
+}
+
+.photo-item:hover .photo-item {
+    flex: 0;
+    max-width: 100px;
+}
+
+.photo-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .photo-list {
+        flex-direction: column;
+        gap: 10px;
+        height: 60vh;
+        justify-content: space-between;
+    }
+    
+    .photo-item {
+        width: 40%;
+        height: 10vh;
+        flex: 0.8;
+    }
+
+    .photo-item:hover {
+        height: 35vh;
+    }
+
+    .photo-item:hover .photo-item {
+        height: 10vh;
+    }
 }
