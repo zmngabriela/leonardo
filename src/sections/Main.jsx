@@ -13,6 +13,11 @@ const Main = () => {
     const mainRef = useRef(null);
     const scrollTimeoutRef = useRef(null);
     const lastScrollTimeRef = useRef(0);
+    
+    // Touch handling for mobile
+    const touchStartRef = useRef(null);
+    const touchYRef = useRef(0);
+    const currentScrollVhRef = useRef(0);
 
     // handle background color change on project hover
     const handleProjectHover = (projectIndex) => {
@@ -69,7 +74,33 @@ const Main = () => {
         
         const html = document.documentElement;
         const scrollVh = html.scrollTop / html.clientHeight;
+        currentScrollVhRef.current = scrollVh;
         html.style.setProperty('--scroll', scrollVh);
+    }, []);
+
+    // Touch handlers for mobile
+    const handleTouchStart = useCallback((e) => {
+        touchStartRef.current = e.touches[0].clientY;
+        touchYRef.current = currentScrollVhRef.current;
+    }, []);
+
+    const handleTouchMove = useCallback((e) => {
+        if (!touchStartRef.current) return;
+        
+        e.preventDefault();
+        const touchY = e.touches[0].clientY;
+        const deltaY = touchStartRef.current - touchY;
+        const deltaVh = deltaY / window.innerHeight;
+        
+        const newScrollVh = Math.max(0, Math.min(7, touchYRef.current + deltaVh));
+        currentScrollVhRef.current = newScrollVh;
+        
+        const html = document.documentElement;
+        html.style.setProperty('--scroll', newScrollVh);
+    }, []);
+
+    const handleTouchEnd = useCallback(() => {
+        touchStartRef.current = null;
     }, []);
 
     // scroll event listener with mobile optimizations
@@ -80,26 +111,18 @@ const Main = () => {
         const options = { passive: true };
         
         if (isMobile) {
-            // aggressive throttling for mobile
-            const throttledScroll = () => {
-                if (scrollTimeoutRef.current) {
-                    return;
-                }
-                
-                scrollTimeoutRef.current = setTimeout(() => {
-                    handleScroll();
-                    scrollTimeoutRef.current = null;
-                }, 32); // ~30fps
-            };
+            // Touch events for mobile
+            document.addEventListener('touchstart', handleTouchStart, { passive: true });
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd, { passive: true });
             
-            window.addEventListener('scroll', throttledScroll, options);
-            handleScroll(); // initial call
+            // Initial scroll value
+            handleScroll();
             
             return () => {
-                window.removeEventListener('scroll', throttledScroll, options);
-                if (scrollTimeoutRef.current) {
-                    clearTimeout(scrollTimeoutRef.current);
-                }
+                document.removeEventListener('touchstart', handleTouchStart);
+                document.removeEventListener('touchmove', handleTouchMove);
+                document.removeEventListener('touchend', handleTouchEnd);
             };
         } else {
             // normal throttling for desktop
@@ -108,7 +131,7 @@ const Main = () => {
             
             return () => window.removeEventListener('scroll', handleScroll, options);
         }
-    }, [handleScroll]);
+    }, [handleScroll, handleTouchStart, handleTouchMove, handleTouchEnd]);
 
     // lazy load sections for mobile performance
     useEffect(() => {
