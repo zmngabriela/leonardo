@@ -1,30 +1,36 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Hero from "./Hero";
-import Projects from "../components/HeroContent";
-import About from "../components/About";
+import HeroContent from "../components/HeroContent";
 import Preloader from "../components/Preloader";
-import Videos from "../components/Videos";
-import Photos from "../components/Photos";
+import Content from "./Content";
 
 const Main = () => {
+    // content preloader state initialized as active (false==showing)
     const [contentPreloader, setContentPreloader] = useState(false);
-    const [activeProject, setActiveProject] = useState(null);
-    const videoRefs = useRef([]);
-    const mainRef = useRef(null);
-    const scrollTimeoutRef = useRef(null);
+
+    // active color initialization, which depends on current video selection
+    const [activeColor, setActiveColor] = useState(null);
+
+    // refs array initialization
+    const heroVideoRefs = useRef([]);
+    const contentRef = useRef();
+
+    // last scroll time ref initialization
     const lastScrollTimeRef = useRef(0);
     
-    // Touch handling for mobile
-    const touchStartRef = useRef(null);
-    const touchYRef = useRef(0);
+    // scroll vh ref initialization
     const currentScrollVhRef = useRef(0);
 
+    // touch handling for mobile
+    const touchStartRef = useRef(null);
+    const touchYRef = useRef(0);
+
     // handle background color change on project hover
-    const handleProjectHover = (projectIndex) => {
-        setActiveProject(projectIndex ? `var(--project-color-${projectIndex})` : null);
+    const handleContentHover = (projectIndex) => {
+        setActiveColor(projectIndex ? `var(--project-color-${projectIndex})` : null);
     };
 
-    // show content after preloader
+    // show content after preloader time
     useEffect(() => {
         const timer = setTimeout(() => {
             setContentPreloader(true);
@@ -32,7 +38,7 @@ const Main = () => {
         return () => clearTimeout(timer);
     }, []);
 
-    // intersection observer for video animations
+    // intersection observer for hero content scaler resizing animation
     useEffect(() => {
         const observer = new IntersectionObserver(
             entries => {
@@ -45,42 +51,86 @@ const Main = () => {
                 });
             },
             {
-                threshold: Array.from({ length: 100 }, (_, i) => i / 100),
+                threshold: [0, 0.5, 1],
             }
         );
 
-        videoRefs.current.forEach(ref => {
+        heroVideoRefs.current.forEach(ref => {
             if (ref) observer.observe(ref);
         });
 
         return () => {
-            videoRefs.current.forEach(ref => {
+            heroVideoRefs.current.forEach(ref => {
                 if (ref) observer.unobserve(ref);
             });
         };
     }, [contentPreloader]);
 
-    // throttled scroll handler for better performance
+    // lazy load sections for mobile performance
+    useEffect(() => {
+        if (!contentPreloader) return;
+
+        // mobile: use intersection observer for performance
+        const sectionObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    const section = entry.target;
+                    const isNearViewport = entry.isIntersecting || 
+                                            entry.boundingClientRect.top < window.innerHeight * 2;
+                    
+                    if (isNearViewport) {
+                        section.classList.add('section-active');
+                    } else {
+                        section.classList.remove('section-active');
+                    }
+                });
+            },
+            {
+                rootMargin: '100% 0px', // start loading 100% of viewport height before
+                threshold: 0
+            }
+        );
+
+        // observe all stacked sections
+        const sections = document.querySelectorAll('.stacked-section');
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        return () => {
+            sections.forEach(section => {
+                sectionObserver.unobserve(section);
+            });
+        };
+    }, [contentPreloader]);
+
+    // desktop scroll handler
     const handleScroll = useCallback(() => {
         const now = Date.now();
         const isMobile = window.innerWidth <= 768;
         const throttleDelay = isMobile ? 32 : 16; // 30fps on mobile, 60fps on desktop
         
+        // makes the function only run each x milisecond depending on screen dimension
         if (now - lastScrollTimeRef.current < throttleDelay) {
             return;
         }
+        lastScrollTimeRef.current = now; // update moment of last processed scroll
         
-        lastScrollTimeRef.current = now;
-        
+        // calculates scroll position in viewport height (vh)
         const html = document.documentElement;
         const scrollVh = html.scrollTop / html.clientHeight;
         currentScrollVhRef.current = scrollVh;
+
+        // updates scroll variable
         html.style.setProperty('--scroll', scrollVh);
     }, []);
 
-    // Touch handlers for mobile
+    // mobile touch handlers
     const handleTouchStart = useCallback((e) => {
+        // where the touch begins
         touchStartRef.current = e.touches[0].clientY;
+
+        // initial scroll
         touchYRef.current = currentScrollVhRef.current;
     }, []);
 
@@ -88,27 +138,35 @@ const Main = () => {
         if (!touchStartRef.current) return;
         
         e.preventDefault();
+
+        // where the touch begins
         const touchY = e.touches[0].clientY;
+
+        // touch difference
         const deltaY = touchStartRef.current - touchY;
+
+        //converts to screen fraction
         const deltaVh = deltaY / window.innerHeight;
         
+        // updates new scroll height
         const newScrollVh = Math.max(0, Math.min(7, touchYRef.current + deltaVh));
         currentScrollVhRef.current = newScrollVh;
         
+        // updates scroll variable
         const html = document.documentElement;
         html.style.setProperty('--scroll', newScrollVh);
     }, []);
 
+    // resets touch initial position
     const handleTouchEnd = useCallback(() => {
         touchStartRef.current = null;
     }, []);
 
-    // scroll event listener with mobile optimizations
+    // select scroll handle
     useEffect(() => {
         const isMobile = window.innerWidth <= 768;
         
         // use passive listener for better performance
-        const options = { passive: true };
         
         if (isMobile) {
             // Touch events for mobile
@@ -116,7 +174,7 @@ const Main = () => {
             document.addEventListener('touchmove', handleTouchMove, { passive: false });
             document.addEventListener('touchend', handleTouchEnd, { passive: true });
             
-            // Initial scroll value
+            // sets initial value
             handleScroll();
             
             return () => {
@@ -125,107 +183,21 @@ const Main = () => {
                 document.removeEventListener('touchend', handleTouchEnd);
             };
         } else {
-            // normal throttling for desktop
-            window.addEventListener('scroll', handleScroll, options);
-            handleScroll(); // initial call
+            // normal scroll for desktop
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            handleScroll(); // sets initial value
             
-            return () => window.removeEventListener('scroll', handleScroll, options);
+            return () => window.removeEventListener('scroll', handleScroll);
         }
     }, [handleScroll, handleTouchStart, handleTouchMove, handleTouchEnd]);
 
-    // lazy load sections for mobile performance
-    useEffect(() => {
-        if (!contentPreloader) return;
-
-        const isMobile = window.innerWidth <= 768;
-        
-        if (isMobile) {
-            // mobile: use intersection observer for performance
-            const sectionObserver = new IntersectionObserver(
-                entries => {
-                    entries.forEach(entry => {
-                        const section = entry.target;
-                        const isNearViewport = entry.isIntersecting || 
-                                             entry.boundingClientRect.top < window.innerHeight * 2;
-                        
-                        if (isNearViewport) {
-                            section.classList.add('section-active');
-                        } else {
-                            section.classList.remove('section-active');
-                        }
-                    });
-                },
-                {
-                    rootMargin: '100% 0px', // start loading 100% of viewport height before
-                    threshold: 0
-                }
-            );
-
-            // observe all stacked sections
-            const sections = document.querySelectorAll('.stacked-section');
-            sections.forEach(section => {
-                sectionObserver.observe(section);
-            });
-
-            return () => {
-                sections.forEach(section => {
-                    sectionObserver.unobserve(section);
-                });
-            };
-        } else {
-            // desktop: activate all sections immediately for best performance
-            const sections = document.querySelectorAll('.stacked-section');
-            sections.forEach(section => {
-                section.classList.add('section-active');
-            });
-        }
-    }, [contentPreloader]);
-
     return (
-        <main ref={mainRef}>
+        <main>
             <Preloader />
-            <Hero backgroundColor={activeProject}>
-                <Projects videoRefs={videoRefs} onHover={handleProjectHover} />
+            <Hero backgroundColor={activeColor}>
+                <HeroContent videoRefs={heroVideoRefs} onHover={handleContentHover} />
             </Hero>
-            {contentPreloader && (
-                <>
-                    <Videos className="videos-first" videos={[
-                        "FOOOOD.mp4",
-                        "croqueta.mp4",
-                        "SPLASHES.mp4"
-                    ]}/>
-                    <Videos className="videos-second" videos={[
-                        "ninipakaa.mp4",
-                        "nini-paka.mp4",
-                        "nini3.mp4"
-                    ]}/>
-                    <Videos className="videos-third" videos={[
-                        "81DE3613-D6D7-47DD-9855-74C74A0B70BF.mp4",
-                        "6F58BB04-5F8E-41AA-A05E-B17F5A710D2B.mp4",
-                        "7D13DC86-07E2-4ECE-801D-B32E1EE03CBC.mp4"
-                    ]}/>
-                    <Videos className="videos-fourth" videos={[
-                        "nooda-oil-hand.mp4",
-                        "03C51E3D-2427-4EF7-A24A-D5D66D1922C9.mp4",
-                        "layout-nooda.mp4"
-                    ]}/>
-                    <Videos className="videos-sixth" videos={[
-                        "roxo-dress.mp4",
-                        "paka-bintou.mp4",
-                        "paka-autumn.mp4"
-                    ]}/>
-                    <Photos className="photos-first" images={[
-                        "noodaoil-40.webp",
-                        "noodaoil-51.webp",
-                        "noodaoil-55.webp",
-                        "noodaoil-70.webp",
-                        "noodaoil-15.webp"
-                    ]}/>
-                    <About />
-                    {/* Scroll container for reveal animations */}
-                    <div className="scroll-container" />
-                </>
-            )}
+            {contentPreloader && <Content ref={contentRef} />}
         </main>
     );
 };
