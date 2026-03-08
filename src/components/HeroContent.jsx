@@ -70,6 +70,8 @@ const HeroContent = ({onHover}) => {
         const root = document.querySelector('.hero-content-container');
         if (!root) return;
 
+        const refs = videoRefs.current;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -93,20 +95,20 @@ const HeroContent = ({onHover}) => {
             }
         );
 
-        videoRefs.current.forEach((ref) => {
+        refs.forEach((ref) => {
             if (ref) observer.observe(ref);
         });
 
         const onVisibilityChange = () => {
             if (document.hidden) {
-                videoRefs.current.forEach((videoEl) => videoEl?.pause());
+                refs.forEach((videoEl) => videoEl?.pause());
             }
         };
 
         document.addEventListener('visibilitychange', onVisibilityChange);
 
         return () => {
-            videoRefs.current.forEach((ref) => {
+            refs.forEach((ref) => {
                 if (ref) observer.unobserve(ref);
                 ref?.pause();
             });
