@@ -23,6 +23,9 @@ const Main = () => {
     useEffect(() => {
         if (!contentPreloader) return;
 
+        // Mobile already uses simplified flow in CSS; skip expensive runtime scroll/video manager.
+        if (window.matchMedia("(max-width: 768px)").matches) return;
+
         const overs = Array.from(document.querySelectorAll(".stack-over"));
         const sections = Array.from(document.querySelectorAll(".scroll-area .stacked-section"));
         if (!overs.length || !sections.length) return;

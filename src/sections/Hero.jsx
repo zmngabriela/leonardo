@@ -9,7 +9,7 @@ const Hero = ({ preloader }) => {
     useEffect(() => {
         const syncTopState = () => {
             const atTop = window.scrollY <= 0;
-            setPageAtTop(atTop);
+            setPageAtTop((prev) => (prev === atTop ? prev : atTop));
 
             // Never keep body locked while page already moved into content.
             if (!atTop) {
@@ -49,6 +49,8 @@ const Hero = ({ preloader }) => {
 
     // shrink hero title on scroll
     const handleScroll = (e) => {
+        if (window.innerWidth <= 768) return;
+
         const container = e.target;
         const scrollTop = container.scrollTop;
 
