@@ -78,14 +78,3 @@
 .preloader-main {
     animation: preloader-main .8s ease-in-out;
 }
-
-/* content scaler */
-.project-scaler {
-    transform: scale3d(1.2, 1.2, 1);
-    transition: transform 0.6s ease;
-    will-change: transform;
-}
-
-.project-scaler.in-view {
-    transform: scale3d(1, 1, 1);
-}
