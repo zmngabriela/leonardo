@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Preloader = () => {
+const PreloaderComponent = () => {
         const [startPreloader, setStartPreloader] = useState(false);
         const [hidden, setHidden] = useState(false);
 
@@ -12,11 +12,14 @@ const Preloader = () => {
                 const hiddenTimer = setTimeout(() => {
                     setHidden(true);
                 }, 3000);
-                return () => clearInterval(startTimer, hiddenTimer);
+                return () => {
+                    clearTimeout(startTimer);
+                    clearTimeout(hiddenTimer);
+                };
             }, [])
 
     return (
-        <div className={`preloader
+        <div className={`preloader-component
             ${startPreloader ? 'preloader-start' : ''}
             ${hidden ? 'd-none' : ''}
         `}>
@@ -32,4 +35,4 @@ const Preloader = () => {
     )
 }
 
-export default Preloader
+export default PreloaderComponent

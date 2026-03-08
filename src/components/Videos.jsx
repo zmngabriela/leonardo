@@ -4,14 +4,14 @@ const Videos = ({ videos, className }) => {
             <ul className="videos-list">
                 {videos.map((videoName, i) => (
                     <li key={i}>
-                        <video 
-                            autoPlay 
-                            muted 
-                            loop 
-                            playsInline 
+                        <video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
                             controls={false}
-                            loading="lazy"
                             preload="none"
+                            disablePictureInPicture
                         >
                             <source src={`${process.env.PUBLIC_URL}/optimized-videos/${videoName}`} type="video/mp4" />
                         </video>

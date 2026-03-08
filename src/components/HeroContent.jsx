@@ -1,4 +1,6 @@
-const HeroContent = ({videoRefs, onHover}) => {
+import { useEffect, useRef } from "react";
+
+const HeroContent = ({onHover}) => {
     const videos = [
         "reel-leo.mp4",
         "patursia.mp4",
@@ -8,16 +10,37 @@ const HeroContent = ({videoRefs, onHover}) => {
         "nini-video-2.mp4"
     ];
 
-    // 3d rotation effect on mouse move
+    // refs array initialization
+    const videoRefs = useRef([]);
+
+    const applyOrientationClass = (videoEl) => {
+        if (!videoEl) return;
+
+        videoEl.classList.remove('video-vertical', 'video-horizontal');
+
+        if (videoEl.videoHeight > videoEl.videoWidth) {
+            videoEl.classList.add('video-vertical');
+        } else {
+            videoEl.classList.add('video-horizontal');
+        }
+    };
+
+    // change background color on video hover
+    const handleMouseEnter = (index) => {
+        onHover(index + 1);
+    };
+
+    // 3d rotation effect on mouse move (desktop only)
     const handleMouseMove = (event, element) => {
+        if (window.innerWidth <= 768) return;
+
         const rect = element.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        
-        // calculate mouse position percentage within element
-        const xPercent = (x / rect.width - 0.5) * 2; // -1 to 1
-        const yPercent = (y / rect.height - 0.5) * 2; // -1 to 1
-        
+
+        const xPercent = (x / rect.width - 0.5) * 2;
+        const yPercent = (y / rect.height - 0.5) * 2;
+
         const wrapper = element.closest('.hero-content-wrapper');
         if (wrapper) {
             wrapper.style.transform = `
@@ -31,51 +54,102 @@ const HeroContent = ({videoRefs, onHover}) => {
 
     // reset rotation on mouse leave
     const handleMouseLeave = (element) => {
+        if (window.innerWidth <= 768) return;
+
         const wrapper = element.closest('.hero-content-wrapper');
         if (wrapper) {
             wrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
         }
+
         // reset hover state to change background color
         onHover(null);
     };
 
-    // change background color on video hover
-    const handleMouseEnter = (index) => {
-        onHover(index + 1);
-    };
+    // observe visibility to scale and play only nearby videos
+    useEffect(() => {
+        const root = document.querySelector('.hero-content-container');
+        if (!root) return;
 
-    // shrink title on scroll
-    const handleScroll = (e) => {
-        const container = e.target;
-        const scrollTop = container.scrollTop;
-        
-        // control title shrink
-        const shouldShrink = scrollTop > 100 && scrollTop < 4000;
-        document.querySelector('.container-title')?.classList.toggle('shrink', shouldShrink);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
 
-        if (scrollTop < container.clientHeight) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-    };
+                        const maybePlay = entry.target.play();
+                        if (maybePlay && typeof maybePlay.catch === 'function') {
+                            maybePlay.catch(() => {});
+                        }
+                    } else {
+                        entry.target.classList.remove('in-view');
+                        entry.target.pause();
+                    }
+                });
+            },
+            {
+                root,
+                threshold: 0.45,
+                rootMargin: '160px 0px 160px 0px',
+            }
+        );
+
+        videoRefs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        const onVisibilityChange = () => {
+            if (document.hidden) {
+                videoRefs.current.forEach((videoEl) => videoEl?.pause());
+            }
+        };
+
+        document.addEventListener('visibilitychange', onVisibilityChange);
+
+        return () => {
+            videoRefs.current.forEach((ref) => {
+                if (ref) observer.unobserve(ref);
+                ref?.pause();
+            });
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+        };
+    }, []);
+
+    // classify each video orientation once metadata is available
+    useEffect(() => {
+        const cleanups = [];
+
+        videoRefs.current.forEach((videoEl) => {
+            if (!videoEl) return;
+
+            if (videoEl.readyState >= 1) {
+                applyOrientationClass(videoEl);
+                return;
+            }
+
+            const onLoadedMetadata = () => applyOrientationClass(videoEl);
+            videoEl.addEventListener('loadedmetadata', onLoadedMetadata);
+            cleanups.push(() => videoEl.removeEventListener('loadedmetadata', onLoadedMetadata));
+        });
+
+        return () => {
+            cleanups.forEach((cleanup) => cleanup());
+        };
+    }, []);
 
     return (
-        <div 
-            className="hero-content-container" 
-            onScroll={handleScroll}
-        >
-            <ul className='row list-unstyled' style={{ paddingTop: '100vh', paddingBottom: '60vh'}}>
+        <div className="hero-content-container">
+            <ul className='hero-content-list list-unstyled' style={{ paddingTop: '100vh', paddingBottom: '60vh'}}>
                 {videos.map((videoName, i) => (
-                    <li key={i} className="hero-content-list">
+                    <li key={i} className="hero-content-item">
                         <div className="hero-content-wrapper">
-                            <video 
+                            <video
                                 ref={video => videoRefs.current[i] = video}
-                                autoPlay 
-                                muted 
-                                loop 
-                                playsInline 
-                                controls={false} 
+                                muted
+                                loop
+                                playsInline
+                                controls={false}
+                                preload="metadata"
+                                disablePictureInPicture
                                 className="hero-content hero-content-scaler"
                                 onMouseMove={(e) => handleMouseMove(e, e.currentTarget)}
                                 onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
