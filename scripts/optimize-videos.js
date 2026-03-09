@@ -86,10 +86,10 @@ const run = async () => {
 
             const mobileProfile = {
                 name: 'mobile',
-                scaleFilter: getScaleFilter(width, height, 1080),
-                fps: 27,
-                crf: 31,
-                preset: 'faster',
+                scaleFilter: getScaleFilter(width, height, 1152),
+                fps: 30,
+                crf: 30,
+                preset: 'medium',
             };
 
             const largeProfile = {
