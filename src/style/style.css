@@ -306,13 +306,11 @@ footer {
         max-width: 90vw;
         max-height: none;
     }
-
-    .hero-content-scaler {
-        transform: scale3d(1.06, 1.06, 1);
-    }
-
+    .hero-content-scaler,
     .hero-content-scaler.in-view {
-        transform: scale3d(1, 1, 1);
+        transform: none;
+        transition: none;
+        will-change: auto;
     }
 
     .hero-content-item {
