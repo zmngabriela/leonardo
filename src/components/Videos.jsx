@@ -5,7 +5,7 @@ const Videos = ({ videos, className }) => {
     const videosKey = useMemo(() => videos.join("|"), [videos]);
 
     useEffect(() => {
-        // Desktop/tablet playback is already coordinated elsewhere.
+        // Desktop/tablet playback is coordinated in Main.
         if (window.innerWidth > 768) return;
 
         const refs = videoRefs.current.filter(Boolean);
@@ -33,7 +33,7 @@ const Videos = ({ videos, className }) => {
             },
             {
                 threshold: 0.35,
-                rootMargin: "180px 0px 180px 0px",
+                rootMargin: "120px 0px 120px 0px",
             }
         );
 

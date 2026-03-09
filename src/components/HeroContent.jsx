@@ -150,7 +150,7 @@ const HeroContent = ({onHover}) => {
                                 loop
                                 playsInline
                                 controls={false}
-                                preload="metadata"
+                                preload="none"
                                 disablePictureInPicture
                                 className="hero-content hero-content-scaler"
                                 onMouseMove={(e) => handleMouseMove(e, e.currentTarget)}
